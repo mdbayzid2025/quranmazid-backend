@@ -9,9 +9,9 @@
   },
   "license": "ISC",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "node dist/server.js",
-    "build": "tsc",
+    "dev": "node init && ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node init && node dist/server.js",
+    "build": "node init && tsc",
     "cm": "ts-node ./src/cm.ts",
     "commit": "npx git-cz",
     "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts",
@@ -29,6 +29,7 @@
     "http-status": "^2.1.0",
     "http-status-codes": "^2.3.0",
     "mongoose": "^9.6.2",
+    "node-fetch": "^3.3.2",
     "process": "^0.11.10",
     "zod": "^4.4.3"
   },
