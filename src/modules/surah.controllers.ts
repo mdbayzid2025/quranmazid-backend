@@ -38,15 +38,14 @@ const attachAudioToVerses = (
 ): (Verse & { audio: string })[] => {
     return verses.map((verse: any) => ({
         ...verse,
-        audio: getAudioUrl(surahId, verse.id), // ✅ No API call, instant!
+        audio: getAudioUrl(surahId, verse.id),
     }));
 };
 
 const getSingleChapter = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     const chapterData = await getFullChapters(Number(id));
-
-    // ✅ Sync, fast, no external dependency
+    
     const versesWithAudio = attachAudioToVerses(Number(id), chapterData.verses);
 
     sendResponse(res, {
@@ -59,7 +58,6 @@ const getSingleChapter = catchAsync(async (req: Request, res: Response) => {
         },
     });
 });
-
 const searchFromChapter = catchAsync(async (req: Request, res: Response) => {
     const query = req?.query?.q?.toString().toLowerCase() || "";
 
@@ -77,17 +75,31 @@ const searchFromChapter = catchAsync(async (req: Request, res: Response) => {
         );
 
         if (matchedVerses.length > 0) {
+            const versesWithMeta = attachAudioToVerses(i, matchedVerses).map(
+                (verse: any, idx: number) => ({
+                    globalId: verse.id,
+                    numberInSurah: idx + 1,
+                    text: verse.text,
+                    translation: verse.translation,
+                    transliteration: verse.transliteration,
+                    audio: verse.audio,
+                })
+            );
+
             results.push({
+                surahNumber: chapterData?.id,
                 surahEngName: chapterData?.transliteration,
+                surahNameArabic: chapterData?.name,
                 totalVerses: chapterData?.total_verses,
-                SurahNameArabic: chapterData?.name,
-                verses: attachAudioToVerses(i, matchedVerses), // ✅ i = surahId
+                verses: versesWithMeta,
             });
         }
     }
 
     return res.json(results);
 });
+
+
 export const SurahController = {
     getAllChapters,
     getSingleChapter,
