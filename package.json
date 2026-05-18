@@ -1,0 +1,40 @@
+{
+  "name": "quranmajid-backend",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "name": "Md Bayzid",
+    "email": "ssmdbayzid23@gmail.com",
+    "github": "https://github.com/mdbayzid2025"
+  },
+  "license": "ISC",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "cm": "ts-node ./src/cm.ts",
+    "commit": "npx git-cz",
+    "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts",
+    "lint:fix": "eslint --fix",
+    "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "prettier:fix": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "http-status": "^2.1.0",
+    "http-status-codes": "^2.3.0",
+    "mongoose": "^9.6.2",
+    "process": "^0.11.10",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "ts-node-dev": "^2.0.0"
+  }
+}
